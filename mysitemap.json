@@ -1,0 +1,32 @@
+{
+    "siteDomain": "zupons.net",
+    "siteName": "Swam",
+    "mainTitle": "Southwest Aquatic Masters",
+    "path": "/var/www/zupons.net/htdocs/swam",
+    "className": "SiteClass",
+    "copyright": "2016 Southwest Aquatic Masters",
+    "author": "Barton L. Phillips, mailto:bartonphillips@gmail.com",
+    "masterdb": "zuponsdotnet",
+    "memberTable": "swammembers",
+    "dbinfo": {
+        "host": "localhost",
+        "user": "7991",
+        "password": "eiBoo2Hor5uo",
+        "database": "zuponsdotnet",
+        "engine": "mysqli"
+    },    
+    "headFile": "includes/swam.head.i.php",
+    "bannerFile": "includes/swam.banner.i.php",
+    "footerFile": "includes/swam.footer.i.php",
+    "count": true,
+    "countMe": true,
+    "trackerImg1": "/images/swamlogo.gif",
+    "myUri": [
+      "bartonphillips.dyndns.org",
+      "bartonlp.com",
+      "bartonlp.org"
+    ],
+    "EMAILADDRESS": "bartonphillips@gmail.com",
+    "EMAILRETURN": "bartonphillips@gmail.com",
+    "EMAILFROM": "webmaster@bartonlp.com"
+}

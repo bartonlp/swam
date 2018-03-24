@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="Author" content="John J. Zupon, mailto:john@zupons.net">
+
+<LINK REV=MADE HREF="mailto:john@zupons.net"> 
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" /> 
+<link rel="stylesheet" href="swam.css" type="text/css" title="swam-default">
+<link rel="alternate stylesheet" href="swam-big.css" type="text/css"
+title="swam-big-fonts">
+
+<script type="text/javascript" language="JavaScript" src="oscheck.js"></script>
+
+<title>Zupon's Family web site</title>
+
+
+<style type="text/css">
+#OsMsg {
+  border: 1px solid black;
+    font-familay: sans-serif;
+      width: 80%;
+        margin-left: auto;
+	  margin-right: auto;
+	    margin-bottom: 10px;
+	      padding: 5px 10px 5px 10px;
+	        background-color: #d0ffff;
+		}
+
+		.show {
+		  display: normal;
+		  }
+
+		  .hide {
+		    display: none;
+		    }
+		    </style>
+		    </head>
+		    <body>
+
+		    <!-- put in for the holidays jjz -->
+		    <!--<div align=center>
+		    <img src="/images/ny14.gif" alt=**>
+		    <h1>Happy New Year</h1>
+		    </div>-->
+		    <!--<div align=center>
+		    <img src="/images/xmastreeblinkinganm.gif" alt=**>
+		    <h1>Happy Holidays</h1>
+		    </div>-->
+		    <?php
+		    //$SwamBodyText = "<body background='/images/blue_paper.gif'>";
+
+		    ?>
+		    <div align=center>
+		    <h2>Welcome to the Zupon's Family Web Site</h2>
+		    </div>
+
+		    <?php
+		    //  include("greetvisitor.phpi");
+		    ?>
+		    <script type="text/javascript" language="JavaScript">
+		      // Check to see what type of OS/browser we have.
+
+		        CheckOs();
+			</script>
+			<p align=center>
+			<!--<img SRC="pictures/beach1.jpg" alt="beach1.jpg">-->
+			<img SRC="zupon/pictures/p51mustang65.jpg" alt="p51mustang65.jpg">
+			</p>
+			<?php
+			// button not working with background from buttons.php
+			 print("
+			 <div class='center buttonMarg'>
+			 <a class='buttons1-5em greenButton' href='zupon/grandkids.php'>
+			  Pictures of the Family</a>
+			  </div>\n");
+			  ?> 
+
+			  <?php
+			  // button not working with background from buttons.php
+			   print("
+			   <div class='center buttonMarg'>
+			   <a class='buttons1-5em blueButton' href='zupon/boss429.php'>
+			    Pictures of BOSS429 Restoration</a>
+			    </div>\n");
+			    ?> 
+
+			    <?php
+			    // button not working with background from buttons.php
+			    // print("
+			    //<div class='center buttonMarg'>
+			    //<a class='buttons1-5em yellowButton' href='/mhshalloween/index.htm'>
+			    // Mary Health of the Sick Halloween</a>
+			    //</div>\n");
+			    ?> 
+			    <?php
+			    // button not working with background from buttons.php
+			    // print("
+			    //<div class='center buttonMarg'>
+			    //<a class='buttons1-5em blueButton' href='index-boss.php'>
+			    // Thumbnail Pictures of BOSS</a>
+			    //</div>\n");
+			    ?> 
+
+			    <?php
+			    // button not working with background from buttons.php
+			     print("
+			     <div class='center buttonMarg'>
+			     <a class='buttons1-5em redButton' href='zupon/brazilpic/index.htm'>
+			      Brazil Vacation Pictures</a>
+			      </div>\n");
+			      ?> 
+			      <?php
+			      // button not working with background from buttons.php
+			      // print("
+			      //<div class='center buttonMarg'>
+			      //<a class='buttons1-5em redButton' href='johnnywedding/index.html'>
+			      // John and Tara's Wedding Pictures</a>
+			      //</div>\n");
+			      ?> 
+
+			      <?php include "getfirefox.html"; ?>
+			      <!-- Tables that hold the weather stuff -->
+			      <!-- t 2 start -->
+
+			      <table width="100%" cellspacing="10"> 
+
+			      <tr>
+			      <td valign="top" align="center">
+			      Here is the weather as reported by<br>
+
+			      <div id="wx_module_4706">
+			         <a href="http://www.weather.com/weather/local/91320">Newbury Park Weather Forecast, CA (91320)</a>
+				 </div>
+
+				 <script type="text/javascript">
+				   
+				      var wx_config='SZ=300x250*WX=FHW*LNK=SSNL*UNT=F*BGI=boat*MAP=null|null*DN=swam.us*TIER=0*PID=1040996069*MD5=5f4b40cc5dae4abe19cfc02865d788f9';
+
+				         document.write('<scr'+'ipt src="'+document.location.protocol+'//wow.weather.com/weather/wow/module/'+wx_locID+'?config='+wx_config+'&proto='+document.location.protocol+'&target='+wx_targetDiv+'"></scr'+'ipt>');  
+					 </script>
+					 <!-- Begin weather.com magnet include -->
+					 <script src='http://voap.weather.com/weather/oap/91320?template=GENXH&par=1002177394&unit=0&key=da1fcbc31d528bba4c7e37d32ed7835e'></script>
+					 <!-- End weather.com magnet include -->
+
+					 </td>
+					 </tr>
+					 </table> <!-- t 2 end -->
+
+					 </td>
+					 </tr>
+					 </table> <!-- t 1 end -->
+					 <br>
+
+					 <p align=center>
+					 Webmaster <a href="mailto:john@zupons.net">John Zupon</a></h3>
+					 </p>
+					 <p align=center><a href="poweredby.php">This site is run with Linux, Apache, MySql and PHP</a></p>
+
+
+					                                  

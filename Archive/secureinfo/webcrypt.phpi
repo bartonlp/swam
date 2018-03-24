@@ -1,0 +1,143 @@
+<?php
+
+/*
+ * Webcrypt.phpi -- Copyright 1999 Nick Sayer
+ * Copyright 1999 Nick Sayer, All Rights Reserved
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Redistributions of either source or binary form must not
+ *    violate US export laws.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *
+ * Builds a secure message system with PHP, mhash and mcrypt.
+ *
+ * Before use, the following must be defined:
+ *
+ *   HASH - the MHASH_ algorithm selector for the hash.
+ *   CIPHER - the MCRYPT_ algorithm selector for the cipher.
+ *   KEY - the secret key to encrypt and decrypt the messages.
+ *
+ * To encrypt, a plaintext message can consist of any string.
+ * It is first run through HASH to get a checksum. The checksum
+ * is put at the front of the message because A> It perterbs
+ * the CIPHER due to its pseudo-random nature and B> because
+ * unlike the plaintext, its length is known.
+ *
+ * The key is also run through the HASH, since keys chosen by
+ * humans typically are not very good, usually consisting
+ * only of about 96 out of 256 values and generally being
+ * too short.
+ *
+ * A random initial vector is chosen to be later prepended to
+ * the ciphertext.
+ *
+ * The hash and plaintext are then run through the selected
+ * CIPHER with the HASHed key and iv. mcrypt routines sometimes append
+ * garbage to the ciphertext, which would not have been run through
+ * the hash. So both the encoder carefully trims the ciphertext
+ * to be the same length as the plaintext (the decoder must also do
+ * the opposite).
+ *
+ * Finally, the ciphertext and the initial vector are run through
+ * base64_encode() in order to make the mess printable. Note
+ * that in order to be mailable or printable, the encoded output
+ * should be run through chunk_split(), and to be passed to a
+ * HTTP server it should be run through rawurlencode().
+ *
+ */
+/*
+ * Take in arbitrary plaintext and make an encrypted message.
+ * The output is base64 encoded.
+ */
+
+  function WEB_encrypt($pt) {
+ //   echo "HASH=". HASH . "<br>";
+
+    $realkey=mhash(HASH, KEY);
+
+//    echo "CIPHER=" . CIPHER . "<br>";
+
+    $td = mcrypt_module_open(CIPHER, "", MODE, "");
+
+    $blockSize = mcrypt_enc_get_block_size($td);
+
+    $iv = mcrypt_create_iv($blockSize, MCRYPT_DEV_URANDOM);
+
+    mcrypt_generic_init($td, KEY, $iv);
+
+    $blob = mcrypt_generic($td, mhash(HASH, $pt).$pt);
+
+    mcrypt_generic_deinit($td);
+
+/*
+ * Note that mcrypt may add trailing nulls that must be stripped.
+ */
+
+    $blob = substr($blob, 0, strlen($pt) + mhash_get_block_size(HASH));
+
+    return base64_encode($iv.$blob);
+  }
+
+/*
+ * Decrypt previously encrypted plaintext message. Input is
+ * expected to be base64 encoded, output is arbitrary string
+ * or FALSE if decode failed.
+ */
+  function WEB_decrypt($blob) {
+    $td = mcrypt_module_open(CIPHER, "", MODE, "");
+
+    $blockSize = mcrypt_enc_get_block_size($td);
+
+    $realkey = mhash(HASH,KEY);
+
+    $rawblob = base64_decode($blob); /* binary blob */
+
+    $iv = substr($rawblob, 0, $blockSize); /* IV */
+
+    if(strlen($iv) < $blockSize)
+      return FALSE;
+
+    $ct = substr($rawblob, $blockSize); /* CipherText */
+
+    mcrypt_generic_init($td, KEY, $iv);
+
+    $unblob = mdecrypt_generic($td, $ct);
+
+    mcrypt_generic_deinit($td);
+
+/*
+ * mcrypt may add trailing nulls that must be stripped.
+ */
+
+    $unblob = substr($unblob, 0, strlen($ct));
+
+    $pt = substr($unblob, mhash_get_block_size(HASH));
+
+    $check = substr($unblob, 0, mhash_get_block_size(HASH));
+
+    if ($check != mhash(HASH, $pt))
+      return FALSE;
+    else
+      return $pt;
+  }
+
+?>

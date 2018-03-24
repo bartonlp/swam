@@ -1,0 +1,27 @@
+<html>
+<head>
+</head>
+<body>
+
+<h1 align=center>Upload Files</h1>
+<hr>
+
+<p>
+<form enctype="multipart/form-data" action="upload.php" method="post">
+
+<input type="hidden" name="MAX_FILE_SIZE" value="100000000">
+
+Send this file: <input name="userfile" type="file">
+
+<input type="submit" value="Send File">
+
+</form>
+</p>
+
+<p>You may check the <a href="uploads/">upload directory</a> to see what is there.
+If you upload a file with the same name as one that is in the directory the original
+file will be renamed with a random (unique) value added to the end of the filename.</p>
+<p>You may also download file from the upload directory as you would form any
+HTTP directory.</p>
+</body>
+</html>

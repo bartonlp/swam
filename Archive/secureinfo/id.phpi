@@ -1,0 +1,239 @@
+<?php
+// Define Fred's Id number
+
+define("FREDS_ID", 50);
+define("BARTONS_ID", 192);
+define("ZUPONS_ID" , 58);
+
+// Two function to be included in other files
+
+require("webcrypt.phpi");
+
+// The lib needs these defined
+
+define("KEY", "411blp^8653");
+define("HASH", MHASH_SHA1);
+define("CIPHER", MCRYPT_TWOFISH);
+define("MODE", MCRYPT_MODE_CFB);// Always open the database! This file is included by ALL others so this one open
+// does it for everyone!
+//$db = mysql_connect("bartonphillips.com", "barton", "bartonl411");
+//$db = mysql_connect("localhost:3306:/var/lib/mysql/mysql.sock", "apache", "3415595");
+//$db = mysql_connect("localhost:3306:/var/run/mysqld/mysqld.sock", "root", "johnz");
+$db = mysql_connect("localhost", "7991", "eiBoo2Hor5uo");
+if(!$db) {
+  PhpError("id.phpi Error 0: Can't mysql_connect!");
+  exit();
+}
+
+if(!mysql_select_db("zuponsdotnet", $db)) {
+  PhpError("id.phpi Error 0: Can't mysql_select_db" . mysql_error($db));
+  exit();
+}
+
+// These globals are returned by CheckId and CheckAndSetId
+
+$SWAM_id_debug=0;
+$SwamId=0;
+$SwamSecret=0;
+$SwamName="";
+$SwamCount=0;
+$SwamLasttime="";
+$SwamLastmsg="";
+$SwamEncryptedId="";
+$SwamFamid=0;
+$SwamUrl = $REMOTE_HOST ? $REMOTE_HOST : $REMOTE_ADDR;
+$SwamFastConnect="";
+// Check to see if this could be a fast connection.
+// We will also check the database later to see if the visitor has selected
+// to always use fast or slow.
+
+//if((strpos($SwamUrl, "dsl") == true) || (ereg("[0-9]+-[0-9]+-[0-9]+-[0-9]+", $SwamUrl) == true)) {
+//  $SwamFastConnect = true;
+//} else {
+//  $SwamFastConnect = false;
+//}
+
+// Set the visitors Cookie
+
+function SetIdCookie($id) {
+  global $SwamEncryptedId;
+
+  // encrypt the ID
+
+  //echo "id.phpi SetIdCookie id=$id<br>";
+  $value = WEB_encrypt("$id");
+
+  $SwamEncryptedId = rawurlencode($value);
+
+  $expire = time() + 31536000;  // one year from now
+
+  // Save the new encrypted id and experation date under applitec.com
+
+//  $ref = ".swam.us";
+  $ref = ".zupons.net.mylampsite.com";
+  setcookie("SWAM_visitor[1]", $SwamEncryptedId, $expire, "/swam/", $ref);
+  return $SwamEncryptedId;
+}
+
+// Use the webcrypt library
+// Either returns the SwamId or zero
+// If we find an old ID we create a new one
+  
+function CheckId() {
+  global $db, $SWAM_visitor, $SWAM_id_debug, $SwamSecret, $SwamName, $SwamId;
+  global $SwamCount, $SwamLasttime, $SwamLastmsg, $HTTP_REFERER;
+  global $SwamFastConnect, $SwamEncryptedId, $SwamGuestId, $SwamFamid;
+  
+  if($SwamGuestId) {
+    $SwamId = $SwamGuestId; // This does not exist!???
+  } else {
+    // Get the id from cookie
+
+    //var_dump($_COOKIE);
+
+    $SwamId = $_COOKIE['SWAM_visitor']; //$SWAM_visitor[1];
+    $SwamId = $SwamId[1];
+    //echo "<br>SwamId=$SwamId<br>";
+  }
+
+  //echo "id.phpi: SwamId=$SwamId<br>";
+  
+  // Check to see if we have a value
+
+  if(!$SwamId) {
+    $SWAM_id_debug = "NOID";
+    return 0;
+   }
+
+  // Make sure the SwamId we have in in range of database entries
+
+  $result = mysql_query("select max(id) from account", $db);
+
+  if(!$result) {
+    PhpError("id.phpi Error 1: " . mysql_error($db));
+    exit();
+  }
+
+  $maxId = mysql_result($result, 0);
+
+  // Check to see if this is a raw id or if it has been encrypted
+  // If it is raw then:
+  // 1. it is a number from 1 to 2^32
+  // 2. it is a number that is between 1 and max id from account table
+  // 3. it will fail the decrypt function
+  // 4. it will index into the database
+  
+  // 1. is it a number
+
+  $num = $SwamId + 0;
+ 
+  if($SwamId == strval($num)) {
+    // Looks like an integer
+
+    // See if this integer looking thing will decrypt?
+
+    $value = rawurldecode($SwamId);
+  
+    if(($pt = WEB_decrypt($value)) != FALSE) {
+      // This is a good encrypted ID
+
+      $SwamId = $pt;
+      $SWAM_id_debug = "ENCRYPTED";
+    } else {
+      $SWAM_id_debug = "RAWID";
+   
+    }
+  } else {
+    // Not an integer so see if we can decrypt it
+
+    $value = rawurldecode($SwamId);
+   
+    if(($pt = WEB_decrypt($value)) != FALSE) {
+      // This is a good encrypted ID
+
+      $SwamEncryptedId = $SwamId;
+
+      $SwamId = $pt;
+      $SWAM_id_debug = "ENCRYPTED";
+    } else {
+      // Decrypt failed
+
+      $SWAM_id_debug = "DECRYPTFAIL";
+      return 0;
+    }
+  }
+
+  // Check the database to see what the possible range is.
+
+  if($SwamId > $maxId) {
+    // Bad number
+    $SWAM_id_debug = "NOTINRANGE"; 
+
+    return 0;
+  }
+
+  // Ok it's a number and it's in range. Now does it index into the database?
+
+  $result = mysql_query("select secret, name, count, lasttime, lastmsg, fastConnect, famid from account where id=$SwamId", $db);
+    
+  if(!$result) {
+    PhpError("id.phpi Error 3: " . mysql_error($db));
+    exit();
+  }
+
+  if(mysql_num_rows($result) == 0) {
+    // Ops didn't find the id in the database?
+    
+    $SWAM_id_debug = "NOTINDB"; 
+    return 0;
+  }
+
+  $row = mysql_fetch_row($result);
+
+  $SwamSecret = $row[0];
+  $SwamName = $row[1];
+  $SwamCount = $row[2];
+  $SwamLasttime = $row[3];
+  $SwamLastmsg = $row[4];
+  $SwamFamid = $row[6];
+
+  // Check the database to see if fastConnect is not null. 
+  // If not null is it "y"? Set to true of false.
+
+  if($row[5]) {
+    $SwamFastConnect = ($row[5] == "1");
+
+  }
+
+  return $SwamId;
+}
+
+function UpdateCount() {
+  global $db, $SwamId;
+ 
+ $result = mysql_query("update account set count=count+1 where id='$SwamId$'", $db);//jjz had to add '' on SwamId
+
+  if(!$result) {
+    PhpError("id.phpi Error 2: ". mysql_error($db));
+    exit();
+ }
+}
+function CheckAndSetId() {
+//  $id = CheckId("no_inc");
+
+ $id = CheckId(); 
+if($id)
+    SetIdCookie($id);
+
+  return $id;
+}
+
+// On error display info on page and send barton an email
+
+
+function PhpError($msg) {
+      global $PHP_SELF;
+ echo "<h1>$PHP_SELF: $msg</h1>";
+  mail("john@zupons.net", "PhpError in SWAM", "$PHP_SELF: $msg");  
+}
+?>

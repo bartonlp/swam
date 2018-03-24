@@ -1,0 +1,52 @@
+<?php
+  // Count number of hits for this site
+  // This file is included at the point we want the counter to occur!
+
+  // But DONT Count Applitec.com
+
+  // For all others check to see if the count file already exists
+
+  $filename = str_replace("/", "_", substr($PHP_SELF, 1)) . ".log";
+  $fd = @fopen("/usr/lib/cgi-bin/counterLogs/$filename", "r");
+
+      //    print "$filename<br>";
+
+  // If it does then get the count else set count to 1
+
+  if(!$fd) {
+    $line = 1;
+  } else {
+    $line = trim(fgets($fd, 100));
+    fclose($fd);
+  }
+
+  $dispnum = chunk_split($line, 1, "+");
+
+  // Display the visitor box
+
+  echo "<center>Number of hits<br><table border=2><tr><th><img src='/ctrnumbers.php?s=16&amp;text=$dispnum' alt='$line'></th></tr></table>Since Jan. 3, 2007</center>";
+
+        // This module is shared by Swam and Applitec. Applitec does not use an account file any more
+        // and does not have a $db set.
+
+        if($db) {
+                $result = mysql_query("select count(*) from account", $db);
+
+                if(!$result) {
+                        PhpError("counter.phpi Error 1: " . mysql_error($db));
+                        exit();
+                }
+
+                $row = mysql_fetch_row($result);
+
+                echo "<center><a href='totalvisitors.php'>Total Visitors</a> ", number_format($row[0]), "</center>\n";
+  }
+
+//        if(!strstr($REMOTE_HOST, "applitec.com")) {
+    // Now open for write and update the count
+
+    $fd = fopen("/usr/lib/cgi-bin/counterLogs/$filename", "w");
+    fputs($fd, ++$line);
+    fclose($fd);
+//  }
+?>

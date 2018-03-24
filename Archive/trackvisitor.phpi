@@ -1,0 +1,65 @@
+<?php
+// !!!!This requires id.phpi be loaded first!!!!!!
+
+// First Time Visitor has been to site
+$SwamFamid = rand(10,900000); //part of new registration jjz
+  
+function FirstTimeHere() {
+  // This must be the first time (OR no cookies).
+  // either way create a database entry and set the cookie
+
+  global $db, $SwamId, $SwamName;
+  global $SwamUrl, $SwamFamid;
+
+  $result = mysql_query("insert into account (firsttime, count, url, famid)
+      values(now(), 1, '$SwamUrl', '$SwamFamid')", $db);
+
+  if(!$result) {
+    PhpError("trackvisitor.phpi Error 1: " . mysql_error($db));
+    exit();
+  }
+  $SwamId = mysql_insert_id($db);
+  $SwamName = "";
+
+  return $SwamId;
+}
+
+//-------------------------------------------
+// Check the user agent and set widths
+
+if(strstr($HTTP_USER_AGENT, "MSIE")) {
+  $widthis = "100%";
+  $isei = TRUE;
+} else {
+  $widthis = "100%";
+}
+
+if(($id = CheckId("inc"))) {
+  $result = @mysql_query("insert into lasttime (id, url, agent) values($id, '$SwamUrl', '$HTTP_USER_AGENT')", $db);
+} else {
+  // No Cookie so this is the first time here
+
+  $id = FirstTimeHere();
+}
+
+// This function is in id.phpi
+// If the cookie was already valid this just updates the experation date
+
+SetIdCookie($id);
+
+// Check out how many entries there are and then how many for TODAY
+
+$result = mysql_query("select count(*), max(item) from bboard", $db);
+
+if(!$result) {
+  PhpError("Error 6: " . mysql_error($db));
+  exit();
+}
+
+$row = mysql_fetch_row($result);
+
+$BBoardCnt = $row[0];
+$BBoardMaxItem = $row[1];
+
+?>
+

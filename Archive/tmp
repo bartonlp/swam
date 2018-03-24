@@ -1,0 +1,215 @@
+-- MySQL dump 10.10
+--
+-- Host: localhost    Database: swam
+-- ------------------------------------------------------
+-- Server version	5.0.22-Debian_0ubuntu6.06.3-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(80) default NULL,
+  `email` varchar(40) default NULL,
+  `address` varchar(30) default NULL,
+  `city` varchar(30) default NULL,
+  `state` varchar(30) default NULL,
+  `gender` varchar(7) default NULL,
+  `zip` varchar(15) default NULL,
+  `country` varchar(10) default NULL,
+  `count` int(11) default '0',
+  `phone` varchar(20) default NULL,
+  `lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `firsttime` datetime default NULL,
+  `url` varchar(80) default NULL,
+  `bday` varchar(12) default NULL,
+  `team` varchar(20) default NULL,
+  `lastmsg` int(11) default NULL,
+  `secret` char(3) default NULL,
+  `famid` int(11) default NULL,
+  `fastConnect` char(1) default NULL,
+  `realEmail` varchar(40) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `addressallow`
+--
+
+DROP TABLE IF EXISTS `addressallow`;
+CREATE TABLE `addressallow` (
+  `id` int(11) NOT NULL default '0',
+  `allowedId` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`,`allowedId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `bboard`
+--
+
+DROP TABLE IF EXISTS `bboard`;
+CREATE TABLE `bboard` (
+  `id` int(11) NOT NULL default '0',
+  `item` int(11) NOT NULL auto_increment,
+  `title` varchar(200) default NULL,
+  `bbtime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `message` blob,
+  `refid` int(11) NOT NULL default '0',
+  `secret` char(3) default NULL,
+  PRIMARY KEY  (`item`),
+  KEY `id` (`id`),
+  KEY `refid` (`refid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `bbsreadmsg`
+--
+
+DROP TABLE IF EXISTS `bbsreadmsg`;
+CREATE TABLE `bbsreadmsg` (
+  `item` int(11) NOT NULL default '0',
+  `id` int(11) NOT NULL default '0',
+  `msg_date` datetime default NULL,
+  PRIMARY KEY  (`item`,`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `feedback`
+--
+
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL default '0',
+  `feedback_time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `likesite` varchar(20) default NULL,
+  `feedback` blob,
+  PRIMARY KEY  (`id`,`feedback_time`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `info`
+--
+
+DROP TABLE IF EXISTS `info`;
+CREATE TABLE `info` (
+  `fname` varchar(20) NOT NULL default '',
+  `lname` varchar(20) NOT NULL default '',
+  `team` varchar(20) default NULL,
+  `sex` varchar(6) default NULL,
+  `bday` varchar(12) default NULL,
+  `email` varchar(40) default NULL,
+  PRIMARY KEY  (`fname`,`lname`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `lasttime`
+--
+
+DROP TABLE IF EXISTS `lasttime`;
+CREATE TABLE `lasttime` (
+  `id` int(11) NOT NULL default '0',
+  `lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `url` varchar(80) default NULL,
+  `agent` varchar(200) default NULL,
+  `start` datetime default NULL,
+  KEY `id` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `meethistory`
+--
+
+DROP TABLE IF EXISTS `meethistory`;
+CREATE TABLE `meethistory` (
+  `name` varchar(40) NOT NULL default '',
+  `meetdate` date NOT NULL default '0000-00-00',
+  `course` varchar(6) default NULL,
+  `sex` varchar(4) default NULL,
+  `agerange` varchar(8) default NULL,
+  `team` varchar(8) default NULL,
+  `event` varchar(10) NOT NULL default '',
+  `time` int(7) default NULL,
+  `adjtime` int(7) default NULL,
+  `useradd` char(2) default NULL,
+  PRIMARY KEY  (`name`,`meetdate`,`event`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `mylinks`
+--
+
+DROP TABLE IF EXISTS `mylinks`;
+CREATE TABLE `mylinks` (
+  `account` int(11) NOT NULL,
+  `description` varchar(255) default NULL,
+  `link` varchar(255) default NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `specialNotice`
+--
+
+DROP TABLE IF EXISTS `specialNotice`;
+CREATE TABLE `specialNotice` (
+  `id` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `swammailmsg`
+--
+
+DROP TABLE IF EXISTS `swammailmsg`;
+CREATE TABLE `swammailmsg` (
+  `item` int(11) NOT NULL auto_increment,
+  `id` int(11) default NULL,
+  `datesent` datetime default NULL,
+  `message` blob,
+  `subject` varchar(80) default NULL,
+  PRIMARY KEY  (`item`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `swammailto`
+--
+
+DROP TABLE IF EXISTS `swammailto`;
+CREATE TABLE `swammailto` (
+  `item` int(11) NOT NULL default '0',
+  `id` int(11) NOT NULL default '0',
+  `dateread` datetime default NULL,
+  PRIMARY KEY  (`item`,`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 PACK_KEYS=1;
+
+--
+-- Table structure for table `whosonline`
+--
+
+DROP TABLE IF EXISTS `whosonline`;
+CREATE TABLE `whosonline` (
+  `id` int(11) default NULL,
+  `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
