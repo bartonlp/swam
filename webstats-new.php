@@ -1,9 +1,11 @@
 <?php
 // BLP 2016-11-28 -- NOTE: THIS IS NOT THE SAME AS THE ONE IN bartonlp.com! It does use
-// http://bartonphillips.net/js/webstats-new.js.
+// http://bartonphillips.net/js/webstats.js.
 // This is for www.swam.us (www.zupons.net/swam).
 putenv("SITELOAD=/var/www/zupons.net/vendor/bartonlp/site-class/includes");
+ini_set("error_log", "/tmp/PHP_ERROR.log");
 $_site = require_once(getenv("SITELOAD")."/siteload.php");
+ErrorClass::setDevelopment(true);
 $S = new $_site->className($_site);
 $T = new dbTables($S);
 
@@ -31,7 +33,7 @@ if($_POST['page'] == 'findbot') {
 
   $human = array(3=>"Robots", 0xc=>"SiteClass", 0x30=>"Sitemap", 0xc0=>"cron");
 
-  $S->query("select agent, who, robots from $S->masterdb.bots where ip='$ip'");
+  $S->query("select agent, site, robots from $S->masterdb.bots where ip='$ip'");
 
   $ret = '';
 
@@ -85,7 +87,7 @@ EOF;
 
 // AJAX
 // Get the info form the tracker table again.
-// NOTE this is called from js/webstats-new.js which always uses this file for its AJAX calls!!
+// NOTE this is called from js/webstats.js which always uses this file for its AJAX calls!!
 
 if($_POST['page'] == 'gettracker') {
   // Callback function for maketable()
@@ -160,7 +162,7 @@ list($tracker) = $T->maketable($sql, array('callback'=>callback,
 
 // Get all 'bots' entries for this day.
 
-$sql = "select ip, agent, count, hex(robots) as bots, who, creation_time as 'created', lasttime ".
+$sql = "select ip, agent, count, hex(robots) as bots, site, creation_time as 'created', lasttime ".
        "from $S->masterdb.bots ".
        "where lasttime >= current_date() and count !=0 order by lasttime desc";
 
@@ -195,7 +197,7 @@ if(is_array($S->myIp)) {
 
 $h->extra = <<<EOF
   <script src="http://bartonphillips.net/js/tablesorter/jquery.tablesorter.js"></script>
-  <script src="http://bartonphillips.net/js/webstats-new.js"></script>
+  <script src="http://bartonphillips.net/js/webstats.js"></script>
   <script>
 var ipcountry = null; // We do not have ipcountry set up yet BLP 2016-11-28 -- 
 var thesite = "$S->siteName"; // This siteName

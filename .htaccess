@@ -20,6 +20,7 @@ Options -Indexes +Includes +FollowSymLinks
 RewriteEngine on
 RewriteRule ^robots\.txt$ robots.php [L,NC]
 RewriteRule ^Sitemap\.xml$ sitemap.php [L,NC]
+RewriteRule ^csstest-(.*)\.css$ https://bartonphillips.net/tracker.php?id=$1&csstest [L,QSA]
 
 SetOutputFilter DEFLATE 
 

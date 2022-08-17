@@ -1,8 +1,12 @@
 <?php
+// BLP 2021-09-05 -- Note the putenv() and
+// ini_set() at the start. This is needed because I do not have root access to this server and
+// several things just arn't right, not the least that this site uses PHP5 not 7.
 // BLP 2014-09-14 -- The .htaccess file has: ReWriteRule ^robots.txt$ robots.php [L,NC]
 // This file reads the rotbots.txt file and outputs it and then gets the user agent string and
 // saves it in the bots table.
 putenv("SITELOAD=/var/www/zupons.net/vendor/bartonlp/site-class/includes");
+ini_set("error_log", "/tmp/PHP_ERROR.log");
 $_site = require_once(getenv("SITELOAD")."/siteload.php");
 
 $S = new Database($_site);

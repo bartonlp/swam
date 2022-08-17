@@ -1,5 +1,10 @@
 <?php
+//BLP 2021-09-05 -- use webstats.php on this server. It still uses the ajax ans js on
+//bartonphillips.net
+
 $lastmod = date("M d, Y H:i:s", getlastmod());  
+$version = SITE_CLASS_VERSION;
+$phpversion = PHP_VERSION;
 
 return <<<EOF
 <footer>
@@ -9,7 +14,7 @@ $counterWigget
 Webmaster <a href="mailto:john@zupons.net">John Zupon</a></h3>
 <p>
 <a href="aboutwebsite.php">This site is run with Linux, Apache, MySql and PHP</a><br>
-<a href="webstats-new.php">WebStats</a>
+<a href="webstats.php">WebStats</a>
 </p>
 <address>
   South West Aquatic Masters <br>
@@ -18,9 +23,10 @@ Webmaster <a href="mailto:john@zupons.net">John Zupon</a></h3>
   6201 Winnetka <br>
   Woodland Hills, CA 91371 <br>
   Team Phone (818)347-1637 <br>
-  Copyright &copy; 2000-2018 South West Aquatic Masters
+  Copyright &copy; 2022 Southwest Masters
 </address>
-<p id='lastmodified'>Last Modified&nbsp;$lastmod</p>
+<p>PHP Version: $phpversion<br>SiteClass Version: $version<br>
+Last Modified&nbsp;$lastmod</p>
 </footer>
 </body>
 </html>

@@ -1,5 +1,9 @@
 <?php
+// BLP 2021-09-05 -- Note the putenv() and
+// ini_set() at the start. This is needed because I do not have root access to this server and
+// several things just arn't right, not the least that this site uses PHP5 not 7.
 putenv("SITELOAD=/var/www/zupons.net/vendor/bartonlp/site-class/includes");
+ini_set("error_log", "/tmp/PHP_ERROR.log");
 $_site = require_once(getenv("SITELOAD") ."/siteload.php");
 
 $S = new $_site->className($_site);
@@ -27,32 +31,10 @@ Masters Swimming</a></li>
 <li>
 <a href="http://www.spma.net/">SPMA</a></li>
 <li>
-<a href="http://www.clubassistant.com/meets.cfm/">Online Meet Registration</a></li>
-<li>
-<a href="http://www.usswim.org/">USSwimming</a></li>
-<li>
-<a href="http://www.unb.ca/web/Masters_swimming/FINAindex.html">Federation
-Internationale de Natation Amateur</a></li>
-<li>
-<a href="http://www.usc.edu/dept/swim/">USC Swimming &amp; Diving</a></li>
-<li>
 <a href="http://www.pacswim.org/">Welcome to Pacific Swimming!</a></li>
 <li>
 <a href="http://www.dalandswim.com/">Daland Swim School</a> Masters Program</li>
 <li>
-<a href="http://lornet.com/swimming/faq/swimfaq.txt">swimming FAQ</a></li>
-<li>
-<a href="http://csca.org/">Canadian Swimming Coaches Association</a></li>
-<li>
-<a href="http://www.unb.ca/web/Masters_swimming/">Canadian Masters Swimming
-Homepage</a></li>
-<li>
-<a href="http://www.swiminfo.com/">Swim Info - Online Swimming Encyclopedia</a></li>
-<li>
-<a href="http://www-rohan.sdsu.edu/dept/coachsci/index.htm">Coaching Science
-Abstracts</a></li>
-<li>
-<a href="http://www.voicenet.com/~nrgswim">NRG Swimming</a></li>
 <center>
 <a href="http://www.pennyweb.com/shellpenny-cgi/pennyweb.pl?1002A1022">
 <img src="images/banner.jpg" width="450" height="80" alt=""></a>

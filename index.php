@@ -1,11 +1,14 @@
 <?php
+// This is special for zupons.net
+// BLP 2021-09-05 --  Note the putenv() and
+// ini_set() at the start. This is needed because I do not have root access to this server and
+// several things just arn't right, not the least that this site uses PHP5 not 7.
+
 putenv("SITELOAD=/var/www/zupons.net/vendor/bartonlp/site-class/includes");
 $_site = require_once(getenv("SITELOAD")."/siteload.php");
-
-//$_site = require_once(getenv("SITELOAD") ."/siteload.php");
-//ErrorClass::setDevelopment(true);
+ini_set("error_log", "/tmp/PHP_ERROR.log");
+ErrorClass::setDevelopment(true);
 $S = new $_site->className($_site);
-
 $h->extra = <<<EOF
   <script>
 if (self != top) {
@@ -23,6 +26,9 @@ if (self != top) {
   margin-top: 1em;
   margin-left: 1em;
   margin-right: auto;
+}
+ul {
+  list-style-type: none;
 }
   </style>
 EOF;
@@ -117,14 +123,14 @@ EOF;
 echo <<<EOF
 <table id="weather">
 <tr>
-<th colspan="2">Weather in Our area.</th>
+<th>Weather in Our area.</th>
 </tr>
 <tr>
-<td>
+<th style='background: white'>
 Here is the Weather in Woodland Hills on the<br>
-<a class="buttons1-5em yellowButton" href="http://www.wunderground.com/US/CA/Woodland_Hills.html">Weather Underground</a>
+<a class="buttons1-5em yellowButton" href="https://www.wunderground.com/weather/us/ca/woodland-hills">Weather Underground</a>
 <br><br>
-</td>
+</th>
 </tr>
 </table>
 </tbody>

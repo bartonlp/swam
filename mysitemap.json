@@ -4,7 +4,7 @@
     "mainTitle": "Southwest Aquatic Masters",
     "path": "/var/www/zupons.net/htdocs/swam",
     "className": "SiteClass",
-    "copyright": "2016 Southwest Aquatic Masters",
+    "copyright": "Southwest Aquatic Masters",
     "author": "Barton L. Phillips, mailto:bartonphillips@gmail.com",
     "masterdb": "zuponsdotnet",
     "memberTable": "swammembers",
@@ -23,7 +23,6 @@
     "trackerImg1": "/images/swamlogo.gif",
     "myUri": [
       "bartonphillips.dyndns.org",
-      "bartonlp.com",
       "bartonlp.org"
     ],
     "EMAILADDRESS": "bartonphillips@gmail.com",
