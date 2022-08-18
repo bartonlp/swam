@@ -8,6 +8,8 @@ ini_set("error_log", "/tmp/PHP_ERROR.log");
 $_site = require_once(getenv("SITELOAD")."/siteload.php");
 $S = new Database($_site);
 
+$DEBUG_GET1 = true;
+
 $ip = $_SERVER['REMOTE_ADDR'];
 $agent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -148,6 +150,31 @@ if($_POST['page'] == 'unload') {
   exit();
 }
 
+// START OF IMAGE and CSSTEST FUNCTIONS These are NOT javascript but rather use $_GET.
+// NOTE: The image functions are GET calls from the original php file. These are not done by
+// tracker.js!
+
+// Here is an example of the banner.i.php:
+// <header>
+//   <a href="https://www.bartonphillips.com">
+//    <img id='logo' data-image="image" src="https://bartonphillips.net/images/blp-image.png"></a>
+// $image2
+// $mainTitle
+// <noscript>
+// <p style='color: red; background-color: #FFE4E1; padding: 10px'>
+// $image3
+// Your browser either does not support <b>JavaScripts</b> or you have JavaScripts disabled, in either case your browsing
+// experience will be significantly impaired. If your browser supports JavaScripts but you have it disabled consider enabaling
+// JavaScripts conditionally if your browser supports that. Sorry for the inconvienence.</p>
+// </noscript>
+// </header>
+//
+// tracker.js changes the <img id='logo' ... from the above to 'src' attribute:
+// src="https://bartonphillips.net/tracker.php?page=script&id="+lastId+"&image="+image);
+// When tracker.php is called to get the image 'page' has the values script, normal or noscript.
+//
+// csstest happens via .htaccess REWRITERULE. See .htaccess for more details.
+
 // Via the <img> in the header section set via the head.i.php
 
 if($_GET['page'] == 'script') {
@@ -263,6 +290,31 @@ if($_GET['page'] == 'noscript') {
   echo $img;
   exit();
 }
+
+if($_GET['page'] == 'csstest') {
+  $id = $_GET['id'];
+  
+  if(!$id) {
+    error_log("tracker csstest: NO ID, $S->ip, $S->agent");
+    exit();
+  }
+
+  if($S->query("select site, ip, page, hex(isJavaScript), agent from $S->masterdb.tracker where id=$id")) {
+    list($site, $ip, $thepage, $js, $agent) = $S->fetchrow('num');
+  }
+  
+  if($DEBUG_GET1) error_log("tracker: $id, $ip, $site, $thepage, CSSTEST, java=$js, time=" . (new DateTime)->format('H:i:s:v'));
+
+  $sql = "update $S->masterdb.tracker set isJavaScript=isJavaScript|0x4000, lasttime=now() where id=$id";
+  $S->query($sql);
+
+  // If this is csstest we are done.
+  
+  header("Content-Type: text/css");
+  echo "/* csstest.css */";
+  exit();
+}
+// END OF GET LOGIC
 
 if($_POST['page'] == 'timer') {  
   $id = $_POST['id'];

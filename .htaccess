@@ -1,26 +1,10 @@
 Options -Indexes +Includes +FollowSymLinks
 
-# SET PHP valuse
-# We can put php info into the .htaccess file
-#php_flag magic_quotes_gpc Off
-
-# The error_log file: cd /var/www/zupons.net/htdocs/; touch PHP_ERROR.log; chmod o+w PHP_ERROR.log
-# The error_log must be in the directory and must be WORLD writeable.
-#php_value error_log /var/www/zupons.net/htdocs/PHP_ERROR.log
-
-# we must use the actual numeric value of E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE & ~E_WARNING
-# as apache does not understand the defined values in php. 22517 is the same as above.
-#php_value error_reporting 22517
-# END of PHP settings
-
-# Set the environment variable so we can find 'siteload.php'
-#SetEnv SITELOAD /var/www/zupons.net/vendor/bartonlp/site-class/includes
-
 # Rewrite Rules for robots.txt and sitemap.xml. Note NC so any case.
 RewriteEngine on
 RewriteRule ^robots\.txt$ robots.php [L,NC]
 RewriteRule ^Sitemap\.xml$ sitemap.php [L,NC]
-RewriteRule ^csstest-(.*)\.css$ https://bartonphillips.net/tracker.php?id=$1&csstest [L,QSA]
+RewriteRule ^csstest-(.*)\.css$ tracker.php?id=$1&page=csstest [L,QSA]
 
 SetOutputFilter DEFLATE 
 

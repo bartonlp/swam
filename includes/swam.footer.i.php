@@ -1,6 +1,4 @@
 <?php
-//BLP 2021-09-05 -- use webstats.php on this server. It still uses the ajax ans js on
-//bartonphillips.net
 
 $lastmod = date("M d, Y H:i:s", getlastmod());  
 $version = SITE_CLASS_VERSION;
