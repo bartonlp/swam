@@ -8,7 +8,7 @@ ini_set("error_log", "/tmp/PHP_ERROR.log");
 $_site = require_once(getenv("SITELOAD")."/siteload.php");
 $S = new Database($_site);
 
-$DEBUG_GET1 = true;
+//$DEBUG_GET1 = true;
 
 $ip = $_SERVER['REMOTE_ADDR'];
 $agent = $_SERVER['HTTP_USER_AGENT'];
