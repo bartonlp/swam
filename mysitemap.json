@@ -1,30 +1,34 @@
 {
-    "siteDomain": "zupons.net",
+    "siteDomain": "bartonlp.org",
     "siteName": "Swam",
-    "mainTitle": "Southwest Aquatic Masters",
-    "path": "/var/www/zupons.net/htdocs/swam",
+    "mainTitle": "<h1>Southwest Aquatic Masters</h1>",
+    "path": "/var/www/html",
     "className": "SiteClass",
     "copyright": "Southwest Aquatic Masters",
     "author": "Barton L. Phillips, mailto:bartonphillips@gmail.com",
-    "masterdb": "zuponsdotnet",
-    "memberTable": "swammembers",
+    "masterdb": "barton",
+    //"memberTable": "swammembers",
     "dbinfo": {
         "host": "localhost",
-        "user": "7991",
-        "password": "eiBoo2Hor5uo",
-        "database": "zuponsdotnet",
+        "user": "barton",
+        "database": "barton",
         "engine": "mysqli"
     },    
-    "headFile": "includes/swam.head.i.php",
-    "bannerFile": "includes/swam.banner.i.php",
-    "footerFile": "includes/swam.footer.i.php",
+    "errorMode": { // only $this. 
+      "development": true, // development automatically sets email to true.
+                         // If development is true then noEmail will be
+                         // set to true unless noEmail is set to false!
+                         // Only false not null or just missing.
+      "noEmail": null,   // Set it to null will not affect the true above which sets it to true also.
+      "noHtml": false,
+      "noOutput": false
+    },
+    "headFile": "/var/www/bartonphillips.com/includes/head.i.php",
+    "bannerFile": "/var/www/bartonphillips.com/includes/banner.i.php",
+    "footerFile": "/var/www/bartonphillips.com/includes/footer.i.php",
     "count": true,
-    "countMe": true,
-    "trackerImg1": "/images/swamlogo.gif",
-    "myUri": [
-      "bartonphillips.dyndns.org",
-      "bartonlp.org"
-    ],
+    "ctrmsg": "Counter Reset Aug 2022",
+    "trackerImg1": "https://bartonlp.org/images/swamlogo.gif",
     "EMAILADDRESS": "bartonphillips@gmail.com",
     "EMAILRETURN": "bartonphillips@gmail.com",
     "EMAILFROM": "webmaster@bartonlp.com"

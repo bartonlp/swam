@@ -2,9 +2,7 @@
 // BLP 2021-09-05 -- Note the putenv() and
 // ini_set() at the start. This is needed because I do not have root access to this server and
 // several things just arn't right, not the least that this site uses PHP5 not 7.
-putenv("SITELOAD=/var/www/zupons.net/vendor/bartonlp/site-class/includes");
-ini_set("error_log", "/tmp/PHP_ERROR.log");
-$_site = require_once(getenv("SITELOAD") ."/siteload.php");
+$_site = require_once(getenv("SITELOADNAME"));
 
 $S = new $_site->className($_site);
 
@@ -35,10 +33,6 @@ Masters Swimming</a></li>
 <li>
 <a href="http://www.dalandswim.com/">Daland Swim School</a> Masters Program</li>
 <li>
-<center>
-<a href="http://www.pennyweb.com/shellpenny-cgi/pennyweb.pl?1002A1022">
-<img src="images/banner.jpg" width="450" height="80" alt=""></a>
-</center>
 $footer
 EOF;
 ?>

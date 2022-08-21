@@ -1,33 +1,75 @@
-Options -Indexes +Includes +FollowSymLinks
+# Apache2 2.4 uses Require
+Require all granted
 
-# Rewrite Rules for robots.txt and sitemap.xml. Note NC so any case.
+Options +Includes
+# include .shtml files or files with the execution bit set
+AddType text/html .shtml .php
+AddOutputFilter INCLUDES .shtml
+XBitHack on
+
+Header set Access-Control-Allow-Origin "*"
+
+SetEnv SITELOAD /var/www/vendor/bartonlp/site-class/includes
+SetEnv SITELOADNAME /var/www/vendor/bartonlp/site-class/includes/siteload.php
+
 RewriteEngine on
+# Don't allow these robots
+RewriteCond %{HTTP_USER_AGENT} "baiduspider" [NC]
+RewriteRule (.*) - [F,L]
+
+# direct robots.txt to robots.php
 RewriteRule ^robots\.txt$ robots.php [L,NC]
 RewriteRule ^Sitemap\.xml$ sitemap.php [L,NC]
-RewriteRule ^csstest-(.*)\.css$ tracker.php?id=$1&page=csstest [L,QSA]
 
-SetOutputFilter DEFLATE 
+# rewrite the address of csstest.css to tracker.php?id=$1&csstest
+RewriteRule ^csstest-(.*)\.css$ https://bartonphillips.net/tracker.php?id=$1&page=csstest [L,QSA]
 
-# Some browsers have problems with other types of compression
-BrowserMatch ^Mozilla/4 gzip-only-text/html
-BrowserMatch ^Mozilla/4\.0[678] no-gzip
-# MSIE defines itself as Mozilla/4 but can handle compression so undo what we did above
-BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+# Keep others from looking at these files.
+RewriteRule ^(\.git|other|script)/.*$ - [F,L]
+RewriteRule ^(\.gitignore|mysitemap\.json|sitemap-new\.txt)$  - [F,L]
 
-# Cache all static content for a year
+FileETag All
+
+# BEGIN EXPIRES
 ExpiresActive On
-<Files *.php>
-  ExpiresByType text/html A0
-</Files>
+ExpiresDefault "access plus 10 day"
+ExpiresByType text/html A0
+ExpiresByType application/x-javascript A0
+ExpiresByType application/javascript A0
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType text/plain "access plus 1 month"
+ExpiresByType image/gif "access plus 1 month"
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType image/jpeg "access plus 1 month"
+ExpiresByType application/x-icon "access plus 1 year"
+# END EXPIRES
 
-ExpiresDefault "access plus 1 years"
-ExpiresByType image/jpg "modification plus 1 years"
-ExpiresByType image/gif "modification plus 1 years"
-ExpiresByType image/png "modification plus 1 years"
-
-# Force no caching for dynamic files
-# <FilesMatch "\.(php|cgi|pl)$">
-#ExpiresActive Off
-#Header set Cache-Control "private, no-cache, no-store, proxy-revalidate, no-transform"
-#Header set Pragma "no-cache"
-#</FilesMatch>
+AddOutputFilterByType DEFLATE \
+  "application/atom+xml" \
+  "application/javascript" \
+  "application/x-javascript" \
+  "application/json" \
+  "application/ld+json" \
+  "application/manifest+json" \
+  "application/rdf+xml" \
+  "application/rss+xml" \
+  "application/schema+json" \
+  "application/vnd.geo+json" \
+  "application/vnd.ms-fontobject" \
+  "application/x-font-ttf" \
+  "application/x-font-woff" \
+  "application/x-web-app-manifest+json" \
+  "application/xhtml+xml" \
+  "application/xml" \
+  "font/opentype" \
+  "image/svg+xml" \
+  "image/x-icon" \
+  "text/cache-manifest" \
+  "text/css" \
+  "text/html" \
+  "text/javascript" \
+  "text/plain" \
+  "text/vtt" \
+  "text/x-component" \
+  "text/xml"
+ 
