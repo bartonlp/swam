@@ -30,9 +30,6 @@ Masters Swimming</a></li>
 <a href="http://www.spma.net/">SPMA</a></li>
 <li>
 <a href="http://www.pacswim.org/">Welcome to Pacific Swimming!</a></li>
-<li>
-<a href="http://www.dalandswim.com/">Daland Swim School</a> Masters Program</li>
-<li>
 $footer
 EOF;
 ?>

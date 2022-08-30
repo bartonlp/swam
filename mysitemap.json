@@ -1,5 +1,5 @@
 {
-    "siteDomain": "bartonlp.org",
+    "siteDomain": "swam.us",
     "siteName": "Swam",
     "mainTitle": "<h1>Southwest Aquatic Masters</h1>",
     "path": "/var/www/html",
@@ -28,7 +28,7 @@
     "footerFile": "/var/www/bartonphillips.com/includes/footer.i.php",
     "count": true,
     "ctrmsg": "Counter Reset Aug 2022",
-    "trackerImg1": "https://bartonlp.org/images/swamlogo.gif",
+    "trackerImg1": "https://swam.us/images/swamlogo.gif",
     "EMAILADDRESS": "bartonphillips@gmail.com",
     "EMAILRETURN": "bartonphillips@gmail.com",
     "EMAILFROM": "webmaster@bartonlp.com"

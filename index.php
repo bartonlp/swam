@@ -110,10 +110,7 @@ Here is the Weather in Woodland Hills on the<br>
 </table>
 
 <ul>
-<li><a href="http://www.dalandswim.com/">Daland Swim School et all</a> An interesting site</li>
 <li><a href="http://www.usms.org/rules/">Master Meet Rules</a> </li>
-<li><a href="handicaps.php">League Handicaps, or &quot;How to swim faster as you get older!&quot;</a>
-<i style="font-size: 60%">New, with all events</i></li>
 <li><a href="otherlinks.php">Other Swimming Links</a></li>
 </ul>
 <hr>
