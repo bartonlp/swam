@@ -36,7 +36,8 @@ $h->banner = <<<EOF
 
   <p>6201 Winnetka Avenue, Woodland Hills, CA 91371 <br>
   (LAPC) Extension Office Phone Number (818)719-6425 <br>
-  <a href="http://www.mapquest.com/cgi-bin/ia_free?width=400&amp;height=400&amp;icontitles=yes&amp;level=8&amp;streetaddress=6201+Winnetka+ave&amp;city=Woodland+Hills&amp;state=CA&amp;zip=91371&amp;POI1streetaddress=6201+Winnetka+ave&amp;POI1city=Woodland+Hills&amp;POI1state=CA&amp;POI1zip=91371&amp;POI1iconID=11">Map To Pierce</a>
+  <!--<a href="https://www.mapquest.com/latlng/34.182971,-118.570951?centerOnResults=1">Map To Pierce</a>-->
+  <a href="https://www.google.com/maps/@34.1854824,-118.5750625,2068m/data=!3m1!1e3!5m2!1e4!1e3?hl=en">Map To Pierce</a>
   <p>
   <img SRC="images/laneline.gif" height="30" width="600" align="BOTTOM" alt="****lane*lines****">
   </p>
@@ -48,13 +49,11 @@ EOF;
 echo <<<EOF
 $top
 $greet
-<h3>Coach:</h3>
-
 <!-- PICTURE OF FRED AND TEXT -->
 <table id='fred'>
   <tr>
     <td><img SRC="images/fred.jpg" alt="Fred Shaw"></td>
-    <td><b>Fred Shaw</b> Three time member NCAA Division I Championship Team
+    <td><b>Coach Fred Shaw:</b><br>Three time member NCAA Division I Championship Team
     (USC); over 20 years experience in Masters Swimming; 1994 Community College Coach of the Year;
     <a
     href="mailto:swamfred@aol.com">E-mail Fred.</a></td>
@@ -66,14 +65,10 @@ $greet
   <tr>
     <td><img SRC="images/poolj_022.JPG" alt='Pierce Pool'></td>
 
-    <td><h3>Highlights:</h3>
-    <ul>
-      <li>South West Masters compete in U.S.M.S. (United States Masters Swimming) meets</li>
-      <li>Masters Dual meets between other local masters teams</li>
-      <li>Triathlon</li>
-      <li>Ocean Swims</li>
-      <li>and other fun stuff.</li>
-    </ul>
+    <td><p><b>Masters Highlights:</b><br>
+    South West Masters compete in United States Masters Swimming meets,
+    Masters Dual meets,
+    Triathlons, Ocean Swims and other fun stuff.</p>
     </td>
   </tr>
 </table>
@@ -108,7 +103,6 @@ Here is the Weather in Woodland Hills on the<br>
 </table>
 </tbody>
 </table>
-
 <ul>
 <li><a href="http://www.usms.org/rules/">Master Meet Rules</a> </li>
 <li><a href="otherlinks.php">Other Swimming Links</a></li>

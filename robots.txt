@@ -1,13 +1,4 @@
-User-Agent: *
-Disallow: /cgi-bin/
-Disallow: /counterLogs/
-Disallow: /numbers/
-Disallow: /manual/
-Disallow: /upload/
-Disallow: /images/
-Disallow: /swam.css
-Disallow: /*.js
-Disallow: /secureinfo/
-Disallow: /swam-messages/
-Disallow: /usage/
-Disallow: /pictures/
+user-agent: *
+allow: /index.php
+allow: /otherlinks.php
+disallow: /

@@ -2,7 +2,7 @@
     "siteDomain": "swam.us",
     "siteName": "Swam",
     "mainTitle": "<h1>Southwest Aquatic Masters</h1>",
-    "path": "/var/www/html",
+    "path": "/var/www/swam.us",
     "className": "SiteClass",
     "copyright": "Southwest Aquatic Masters",
     "author": "Barton L. Phillips, mailto:bartonphillips@gmail.com",
