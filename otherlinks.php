@@ -3,13 +3,12 @@
 // ini_set() at the start. This is needed because I do not have root access to this server and
 // several things just arn't right, not the least that this site uses PHP5 not 7.
 $_site = require_once(getenv("SITELOADNAME"));
-
 $S = new $_site->className($_site);
 
-$h->title = "Other Master's Swimming Links";
-$h->banner = "<h1 style='text-align: center'>Other Master's Swimming Links</h1><hr>";
+$S->title = "Other Master's Swimming Links";
+$S->banner = "<h1 style='text-align: center'>Other Master's Swimming Links</h1><hr>";
 
-list($top, $footer) = $S->getPageTopBottom($h);
+[$top, $footer] = $S->getPageTopBottom();
 
 echo <<<EOF
 $top

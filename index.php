@@ -4,11 +4,11 @@
 $_site = require_once(getenv("SITELOADNAME"));
 $S = new $_site->className($_site);
 
-$h->link =<<<EOF
+$S->link =<<<EOF
   <link rel="stylesheet" href="css/swam.css">
 EOF;
 
-$h->css =<<<EOF
+$S->css =<<<EOF
 #weather-nonmembers {
   width: 13em;
   border: 1px solid black;
@@ -24,13 +24,13 @@ ul {
 #fred td, #pool td { padding-right: 10px; }
 EOF;
 
-$h->title = "South West Aquatic Masters Home Page -- Coached Masters ".
+$S->title = "South West Aquatic Masters Home Page -- Coached Masters ".
             "Swimming Workouts and Competition Swimming";
 
-$b->msg = "PhpVersion: " . PHP_VERSION;
-$b->msg1 = "<br>SiteClass Version: " . SITE_CLASS_VERSION;
+$S->msg = "PhpVersion: " . PHP_VERSION;
+$S->msg1 = "<br>SiteClass Version: " . SITE_CLASS_VERSION;
 
-$h->banner = <<<EOF
+$S->banner = <<<EOF
 <div>
   <h2><a href="http://www.pierceaquatics.com/">Los Angeles Pierce College</a></h2>
 
@@ -44,7 +44,7 @@ $h->banner = <<<EOF
 </div>
 EOF;
 
-[$top, $footer] = $S->getPageTopBottom($h, $b);
+[$top, $footer] = $S->getPageTopBottom();
 
 echo <<<EOF
 $top
