@@ -7,6 +7,7 @@
     "copyright": "Southwest Aquatic Masters",
     "author": "Barton L. Phillips, mailto:bartonphillips@gmail.com",
     "masterdb": "barton",
+    "favicon": "./favicon.ico",
     //"memberTable": "swammembers",
     "dbinfo": {
         "host": "localhost",
@@ -27,7 +28,6 @@
     "bannerFile": "/var/www/bartonphillips.com/includes/banner.i.php",
     "footerFile": "/var/www/bartonphillips.com/includes/footer.i.php",
     "count": true,
-    "ctrmsg": "Counter Reset Aug 2022",
     "trackerImg1": "https://swam.us/images/swamlogo.gif",
     "EMAILADDRESS": "bartonphillips@gmail.com",
     "EMAILRETURN": "bartonphillips@gmail.com",
