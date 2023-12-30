@@ -5,8 +5,8 @@
 $_site = require_once(getenv("SITELOADNAME"));
 $S = new $_site->className($_site);
 
-$S->title = "Other Master's Swimming Links";
-$S->banner = "<h1 style='text-align: center'>Other Master's Swimming Links</h1><hr>";
+$S->title = "Other Masters Swimming Links";
+$S->banner = "<h1 style='text-align: center'>Other Masters Swimming Links</h1><hr>";
 
 [$top, $footer] = $S->getPageTopBottom();
 

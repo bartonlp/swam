@@ -9,6 +9,10 @@ $S->link =<<<EOF
 EOF;
 
 $S->css =<<<EOF
+#poolclosed {
+  text-align: center;
+  color: red;
+}
 #weather-nonmembers {
   width: 13em;
   border: 1px solid black;
@@ -44,6 +48,14 @@ $S->banner = <<<EOF
 </div>
 EOF;
 
+$greet =<<<EOF
+<div id="poolclosed">
+<h1>Closed For Repair</h1>
+<p>The pool has been closed since January 2023 and there is no reopening date yet.</p>
+<img SRC="images/laneline.gif" height="30" width="600" align="BOTTOM" alt="****lane*lines****">
+</div>
+EOF;
+
 [$top, $footer] = $S->getPageTopBottom();
 
 echo <<<EOF
@@ -66,9 +78,9 @@ $greet
     <td><img SRC="images/poolj_022.JPG" alt='Pierce Pool'></td>
 
     <td><p><b>Masters Highlights:</b><br>
-    South West Masters compete in United States Masters Swimming meets,
-    Masters Dual meets,
-    Triathlons, Ocean Swims and other fun stuff.</p>
+    South West Aquatic Masters (SWAM) compete in United States Masters Swimming meets,
+    masters dual meets,
+    triathlons, ocean swims and other fun stuff.</p>
     </td>
   </tr>
 </table>
