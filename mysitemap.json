@@ -13,7 +13,7 @@
         "host": "localhost",
         "user": "barton",
         "database": "barton",
-        "engine": "mysqli"
+        "engine": "mysql"
     },    
     "errorMode": { // only $this. 
       "development": true, // development automatically sets email to true.
